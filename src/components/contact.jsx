@@ -19,24 +19,17 @@ const Contact = () => {
     return () => clearInterval(interval);
   }, [backgroundImages.length]);
 
-  const getApiUrl = () => {
-    const isDevelopment = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
-    const hostname = window.location.hostname;
-    if (isDevelopment) {
-      return (hostname === 'localhost' || hostname === '127.0.0.1')
-        ? 'http://localhost:5000/api/contact'
-        : `http://${hostname}:5000/api/contact`;
-    }
-    return '/api/contact';
-  };
+  const API_BASE_URL =
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:5000'
+      : 'https://comingsoon-backend-zl1s.onrender.com';
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const apiUrl = getApiUrl();
-      const response = await fetch(apiUrl, {
+      const response = await fetch(`${API_BASE_URL}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(formData),
@@ -66,17 +59,11 @@ const Contact = () => {
 
       <div className="main-content">
         <div className="content-wrapper">
-          {/* <div className="heart-section">
-            <div className="heart-container">
-              <div className="heart heart-1"></div>
-              <div className="heart heart-2"></div>
-              <div className="heart heart-3"></div>
-            </div>
-          </div> */}
-
           <div className="slogan-section">
             <h1 className="main-title animate-fadeInUp">Nothing</h1>
-            <p className="subtitle animate-fadeInUp animation-delay-300">"Crafting Dreams into Reality, One Stitch at a Time"</p>
+            <p className="subtitle animate-fadeInUp animation-delay-300">
+              "Crafting Dreams into Reality, One Stitch at a Time"
+            </p>
           </div>
 
           <div className="coming-soon-section animate-fadeInUp animation-delay-600">
@@ -88,7 +75,9 @@ const Contact = () => {
 
           <div className="contact-form animate-fadeInUp animation-delay-900">
             <h3 className="form-title">Get in Touch</h3>
-            <p className="form-description">Have questions about our bed and pillow covers? We'd love to hear from you!</p>
+            <p className="form-description">
+              Have questions about our bed and pillow covers? We'd love to hear from you!
+            </p>
             <form onSubmit={handleSubmit} className="form-fields">
               <input 
                 name="name" 
