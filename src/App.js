@@ -6,15 +6,14 @@ import './App.css';
 const App = () => {
   const [data, setData] = useState(null);
 
-  // Choose API base URL based on environment
+  // API base URL
   const API_BASE_URL =
     process.env.NODE_ENV === 'development'
-      ? 'http://localhost:5000'
-      : 'https://comingsoon-backend-zl1s.onrender.com';
+      ? 'http://localhost:50'   // local backend test
+      : 'http://103.207.14.139:50'; // server backend
 
   useEffect(() => {
-    // Fetch data from backend API
-    fetch(`${API_BASE_URL}/api/some-route`)
+    fetch(`${API_BASE_URL}/api/some-route`)   // <-- un route ku maathiko
       .then(res => res.json())
       .then(apiData => {
         console.log("API Response:", apiData);
@@ -27,9 +26,7 @@ const App = () => {
     <div className="container">
       <h1>Data from Backend:</h1>
       <pre>{JSON.stringify(data, null, 2)}</pre>
-
-      {/* Your existing Contact component */}
-      <Contact />
+      <Contact API_BASE_URL={API_BASE_URL} />
     </div>
   );
 };
