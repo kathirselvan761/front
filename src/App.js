@@ -23,11 +23,11 @@ const App = () => {
   }, [API_BASE_URL]);
 
   return (
-    <div className="container">
-      <h1>Data from Backend:</h1>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-      <Contact API_BASE_URL={API_BASE_URL} />
-    </div>
+    // <div className="container">
+    //   <h1>Data from Backend:</h1>
+    //   <pre>{JSON.stringify(data, null, 2)}</pre>
+    //   <Contact API_BASE_URL={API_BASE_URL} />
+    // </div>
   );
 };
 
