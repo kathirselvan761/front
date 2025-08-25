@@ -24,18 +24,15 @@ const Contact = () => {
     return () => clearInterval(interval);
   }, [backgroundImages.length]);
 
-  // API URL helper
+  // API URL helper - FIXED VERSION
   const getApiUrl = () => {
-    const isDevelopment =
-      process.env.NODE_ENV === "development" ||
-      window.location.hostname === "localhost";
-
-    if (isDevelopment) {
-      return process.env.REACT_APP_API_URL + "/api/contact";
-    }
-    return "/api/contact"; // production proxy
+    // Always use external API URL from environment variable
+    // If no environment variable, fallback to hardcoded URL
+    return process.env.REACT_APP_API_URL 
+      ? process.env.REACT_APP_API_URL + "/api/contact"
+      : "http://103.45.67.89:5000/api/contact";
   };
-  
+
   // Handle input change
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -45,6 +42,8 @@ const Contact = () => {
     e.preventDefault();
 
     try {
+      console.log("Submitting to:", getApiUrl()); // Debug log
+      
       const response = await fetch(getApiUrl(), {
         method: "POST",
         headers: {
